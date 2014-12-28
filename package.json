@@ -1,0 +1,20 @@
+{
+  "name": "react-testing-mocha-jsdom",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Unit testing React with Mocha and jsdom",
+  "scripts": {
+    "test": "echo \"To Be Implemented\" && exit 1",
+    "jsx": "./node_modules/.bin/jsx common/components/ lib/components/"
+  },
+  "author": "Jess Telford <hi@jes.st>",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdom": "^2.0.0",
+    "mocha": "^2.1.0",
+    "react-tools": "^0.12.1"
+  },
+  "dependencies": {
+    "react": "^0.12.1"
+  }
+}
