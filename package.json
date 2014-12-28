@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Unit testing React with Mocha and jsdom",
   "scripts": {
-    "test": "echo \"To Be Implemented\" && exit 1",
+    "test": "./node_modules/.bin/mocha --recursive",
     "jsx": "./node_modules/.bin/jsx common/components/ lib/components/"
   },
   "author": "Jess Telford <hi@jes.st>",
