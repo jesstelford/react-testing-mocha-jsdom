@@ -17,9 +17,9 @@ describe('Todo-item component', function(){
     });
 
     // We want to render into the <body> tag
-    var container = global.document.getElementsByTagName('body')[0];
+    var renderTarget = document.getElementsByTagName('body')[0];
 
-    var renderedComponent = React.render(component, container);
+    var renderedComponent = React.render(component, renderTarget);
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
