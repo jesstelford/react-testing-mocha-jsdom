@@ -3,10 +3,8 @@ var jsdom = require('jsdom');
 before('DOM Setup', function() {
 
   // A super simple DOM ready for React to render into
-  global.document = jsdom.jsdom('<html><head></head><body></body></html>');
-
   // Store this DOM and the window ready for React to access
-  this.document = global.document;
+  global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
   global.window = global.document.parentWindow;
 });
 
