@@ -8,54 +8,36 @@ var React = require('react/addons'),
 
 describe('Todo-item component', function(){
 
-  before('instantiate', function() {
+  before('render and locate element', function() {
 
     // Create our component
-    this.component = TodoItemFactory({
+    var component = TodoItemFactory({
       done: false,
       name: 'Write Tutorial'
     });
 
     // We want to render into the <body> tag
-    this.container = global.document.getElementsByTagName('body')[0];
+    var container = global.document.getElementsByTagName('body')[0];
+
+    var renderedComponent = React.render(component, container);
+
+    // Searching for <input> tag within rendered React component
+    // Throws an exception if not found
+    var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
+      renderedComponent,
+      'input'
+    );
+
+    this.inputElement = inputComponent.getDOMNode();
 
   });
 
-  describe('when rendered', function() {
+  it('<input> should be of type "checkbox"', function() {
+    assert(this.inputElement.getAttribute('type') === 'checkbox');
+  });
 
-    before('render', function() {
-
-      this.renderedComponent = TestUtils.renderIntoDocument(
-        this.component,
-        this.container
-      );
-
-    });
-
-    describe('the <input> el', function() {
-
-      before('locate rendered component', function() {
-
-        // Searching for <input> tag within rendered React component
-        // Throws an exception if not found
-        var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
-          this.renderedComponent,
-          'input'
-        );
-
-        this.inputElement = inputComponent.getDOMNode();
-
-      });
-
-      it('should be of type "checkbox"', function() {
-        assert(this.inputElement.getAttribute('type') === 'checkbox');
-      });
-
-      it('should not be checked', function() {
-        assert(this.inputElement.checked === false);
-      });
-
-    })
-  })
+  it('<input> should not be checked', function() {
+    assert(this.inputElement.checked === false);
+  });
 
 })
