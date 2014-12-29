@@ -1,5 +1,5 @@
-*This is **Part 2** of the series *"Modular Isomorphic React JS applications".*
-See [Part 1 here](https://github.com/jesstelford/react-isomorphic-boilerplate)*
+*This is __Part 2__ of the series* "Modular Isomorphic React JS applications".
+*See [Part 1 here](https://github.com/jesstelford/react-isomorphic-boilerplate)*
 
 # Unit testing React Components with Mocha + jsdom
 
@@ -30,14 +30,14 @@ other implementation in the future, etc).
 
 ## Let's do it
 
-**tl;dr** [Get the completed
+**tl;dr**: [Get the completed
 example](https://github.com/jesstelford/react-testing-mocha-jsdom)
 
 We'll be using these libraries:
 
  * [Node.js](http://nodejs.org)
  * [npm](https://www.npmjs.org)
- * [React](https://www.npmjs.com/package/react) ^0.12.0
+ * [React](https://www.npmjs.com/package/react) - ^0.12.0
  * [react-tools](https://www.npmjs.com/package/react-tools) - to compile JSX to JS
  * [Mocha](http://mochajs.org/) - testing framework and runner
  * [jsdom](https://github.com/tmpvar/jsdom) - headless DOM for React to use in tests
@@ -53,7 +53,7 @@ Our code structure will look like this:
     └── components  # Unit tests for components
 ```
 
-### todo-item.js React component
+### `todo-item.js` React component
 
 We previously built the component `common/components/todo-item.js` in [Part 1](https://github.com/jesstelford/react-isomorphic-boilerplate#server-side-rendering):
 
