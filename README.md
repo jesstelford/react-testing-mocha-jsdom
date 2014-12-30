@@ -1,5 +1,6 @@
 *This is __Part 2__ of the series* "Modular Isomorphic React JS applications".
-*See [Part 1 here](https://github.com/jesstelford/react-isomorphic-boilerplate)*
+*See [Part 1](https://github.com/jesstelford/react-isomorphic-boilerplate) and
+[Part 3](https://github.com/jesstelford/react-testing-isomorphic) for more.*
 
 # Unit testing React Components with Mocha + jsdom
 
