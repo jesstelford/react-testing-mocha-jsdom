@@ -86,7 +86,7 @@ executing `npm run jsx`. This will save the built file into
 
 ### jsdom
 
-Setting up jsdom ^2.0.0 can be acheived in a couple of lines:
+Setting up jsdom 2.0.0-4.0.1 can be acheived in a couple of lines:
 
 ```javascript
 // file: test/setup.js
@@ -95,8 +95,11 @@ var jsdom = require('jsdom');
 // A super simple DOM ready for React to render into
 // Store this DOM and the window in global scope ready for React to access
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-global.window = document.parentWindow;
+global.window = document.defaultView;
+global.navigator = window.navigator;
 ```
+
+
 
 We are emulating a browser environment here by setting the global variables
 `document` and `window` as created by `jsdom`. This later allows React to render
@@ -250,7 +253,7 @@ $ npm test
 
 
   Todo-item component
-    ✓ <input> should be of type "checkbox" 
+    ✓ <input> should be of type "checkbox"
 
 
   1 passing (25ms)
