@@ -10,7 +10,7 @@
   "author": "Jess Telford <hi@jes.st>",
   "license": "ISC",
   "devDependencies": {
-    "jsdom": "^2.0.0",
+    "jsdom": "^3.1.2",
     "mocha": "^2.1.0",
     "react-tools": "^0.12.1"
   },
