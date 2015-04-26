@@ -4,8 +4,7 @@
   "version": "1.0.0",
   "description": "Unit testing React with Mocha and jsdom",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --recursive",
-    "jsx": "./node_modules/.bin/jsx common/components/ lib/components/"
+    "test": "./node_modules/.bin/mocha --compilers js:babel/register --recursive"
   },
   "author": "Jess Telford <hi@jes.st>",
   "license": "ISC",
