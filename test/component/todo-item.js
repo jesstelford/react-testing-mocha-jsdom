@@ -26,4 +26,4 @@ describe('Todo-item component', function(){
   it('<input> should not be checked', function() {
     assert(this.inputElement.checked === false);
   });
-})
+});

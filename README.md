@@ -48,8 +48,6 @@ Our code structure will look like this:
 ```
 ├── common
 │   └── components  # All our react components
-├── lib
-│   └── components  # Our jsx-compiled components
 └── test
     └── components  # Unit tests for components
 ```
@@ -79,10 +77,6 @@ module.exports = React.createClass({
   }
 });
 ```
-
-Since this component contains JSX, we must build it before we can use it by
-executing `npm run jsx`. This will save the built file into
-`lib/components/todo-item.js`
 
 ### jsdom
 
@@ -145,8 +139,9 @@ var assert = require('assert');
 describe('Todo-item component', function(){
 
   before('render and locate element', function() {
-
-    var renderedComponent = React.render(component, renderTarget);
+    var renderedComponent = TestUtils.renderIntoDocument(
+      <TodoItem done={false} name="Write Tutorial"/>
+    );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
@@ -156,7 +151,6 @@ describe('Todo-item component', function(){
     );
 
     this.inputElement = inputComponent.getDOMNode();
-
   });
 
   it( /* [...] */ )
@@ -193,33 +187,21 @@ describe('Todo-item component', function(){
 ```
 
 All together now, and we end up with a complete test that can be run with
-`./node_modules/.bin/mocha --recursive` (alternatively can be run as `npm test`
-in the example repo):
+`./node_modules/.bin/mocha --compilers js:babel/register --recursive`
+(alternatively can be run as `npm test` in the example repo):
 
 ```javascript
 // file: test/component/todo-item.js
 var React = require('react/addons'),
     assert = require('assert'),
-    TodoItem = require('../../lib/components/todo-item'),
-    TestUtils = React.addons.TestUtils,
-    // Since we're not using JSX here, we need to wrap the component in a factory
-    // manually. See https://gist.github.com/sebmarkbage/ae327f2eda03bf165261
-    TodoItemFactory = React.createFactory(TodoItem);
+    TodoItem = require('../../common/components/todo-item'),
+    TestUtils = React.addons.TestUtils;
 
 describe('Todo-item component', function(){
-
   before('render and locate element', function() {
-
-    // Create our component
-    var component = TodoItemFactory({
-      done: false,
-      name: 'Write Tutorial'
-    });
-
-    // We want to render into the <body> tag
-    var renderTarget = document.getElementsByTagName('body')[0];
-
-    var renderedComponent = React.render(component, renderTarget);
+    var renderedComponent = TestUtils.renderIntoDocument(
+      <TodoItem done={false} name="Write Tutorial"/>
+    );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
@@ -229,14 +211,16 @@ describe('Todo-item component', function(){
     );
 
     this.inputElement = inputComponent.getDOMNode();
-
   });
 
   it('<input> should be of type "checkbox"', function() {
     assert(this.inputElement.getAttribute('type') === 'checkbox');
   });
 
-})
+  it('<input> should not be checked', function() {
+    assert(this.inputElement.checked === false);
+  });
+});
 ```
 
 ## Results
@@ -250,7 +234,7 @@ $ npm test
 
 
   Todo-item component
-    ✓ <input> should be of type "checkbox" 
+    ✓ <input> should be of type "checkbox"
 
 
   1 passing (25ms)
