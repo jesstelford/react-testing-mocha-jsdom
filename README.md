@@ -161,30 +161,8 @@ describe('Todo-item component', function(){
 Now, we have extracted the DOM Node (`this.inputElement`) from the rendered
 React component (`renderedComponent`) using React's `getDOMNode()` method.
 
-`component` is the regularly Factory-built React component (see [Part
-1](https://github.com/jesstelford/react-isomorphic-boilerplate#browser-side-rendering)
-for more).
-
-`renderTarget` is where jsdom comes in, allowing us to access the `document`
+`renderIntoDocument` is where jsdom comes in, allowing us to access the `document`
 object as if we were in a browser!
-
-```javascript
-// file: test/component/todo-item.js
-var assert = require('assert');
-
-describe('Todo-item component', function(){
-
-  before('render and locate element', function() {
-
-    // We want to render into the <body> tag
-    var renderTarget = document.getElementsByTagName('body')[0];
-
-    // [...]
-
-  });
-
-  it( /* [...] */ )
-```
 
 All together now, and we end up with a complete test that can be run with
 `./node_modules/.bin/mocha --compilers js:babel/register --recursive`
