@@ -5,6 +5,9 @@ var React = require('react/addons'),
 
 describe('Todo-item component', function(){
   before('render and locate element', function() {
+    // Inject dom
+    require('../../test/setup.js');
+      
     var renderedComponent = TestUtils.renderIntoDocument(
       <TodoItem done={false} name="Write Tutorial"/>
     );
