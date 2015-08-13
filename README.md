@@ -38,8 +38,8 @@ We'll be using these libraries:
 
  * [Node.js](http://nodejs.org)
  * [npm](https://www.npmjs.org)
- * [React](https://www.npmjs.com/package/react) - ^0.12.0
- * [react-tools](https://www.npmjs.com/package/react-tools) - to compile JSX to JS
+ * [React](https://www.npmjs.com/package/react) - ^0.13.3
+ * [babel-core](https://www.npmjs.com/package/babel-core) - to compile ES6 and JSX to JS
  * [Mocha](http://mochajs.org/) - testing framework and runner
  * [jsdom](https://github.com/tmpvar/jsdom) - headless DOM for React to use in tests
 
@@ -58,16 +58,15 @@ We previously built the component `common/components/todo-item.js` in [Part 1](h
 
 ```javascript
 // file: common/components/todo-item.js
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-  displayName: 'TodoItem',
+export default class TodoItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { done: props.done };
+  }
 
-  getInitialState: function() {
-    return { done: this.props.done }
-  },
-
-  render: function() {
+  render() {
     return (
       <label>
         <input type="checkbox" defaultChecked={this.state.done} />
@@ -75,7 +74,7 @@ module.exports = React.createClass({
       </label>
     );
   }
-});
+}
 ```
 
 ### jsdom
@@ -84,12 +83,13 @@ Setting up jsdom ^2.0.0 can be acheived in a couple of lines:
 
 ```javascript
 // file: test/setup.js
-var jsdom = require('jsdom');
+import jsdom from 'jsdom';
 
 // A super simple DOM ready for React to render into
 // Store this DOM and the window in global scope ready for React to access
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-global.window = document.parentWindow;
+global.window = document.defaultView;
+global.navigator = window.navigator;
 ```
 
 We are emulating a browser environment here by setting the global variables
@@ -113,11 +113,11 @@ terms of test setup and teardown:
 
 ```javascript
 // file: test/component/todo-item.js
-var assert = require('assert');
+import assert from 'assert';
 
-describe('Todo-item component', function(){
+describe('Todo-item component', () => {
 
-  it('<input> should be of type "checkbox"', function() {
+  it('<input> should be of type "checkbox"', () => {
     assert(this.inputElement.getAttribute('type') === 'checkbox');
   });
 
@@ -134,23 +134,24 @@ tests:
 
 ```javascript
 // file: test/component/todo-item.js
-var assert = require('assert');
+import assert from 'assert';
 
-describe('Todo-item component', function(){
+describe('Todo-item component', () => {
+  let inputElement;
 
-  before('render and locate element', function() {
-    var renderedComponent = TestUtils.renderIntoDocument(
+  before('render and locate element', () => {
+    const renderedComponent = TestUtils.renderIntoDocument(
       <TodoItem done={false} name="Write Tutorial"/>
     );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
-    var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
+    const inputComponent = TestUtils.findRenderedDOMComponentWithTag(
       renderedComponent,
       'input'
     );
 
-    this.inputElement = inputComponent.getDOMNode();
+    inputElement = inputComponent.getDOMNode();
   });
 
   it( /* [...] */ )
@@ -158,45 +159,48 @@ describe('Todo-item component', function(){
 });
 ```
 
-Now, we have extracted the DOM Node (`this.inputElement`) from the rendered
+Now, we have extracted the DOM Node (`inputElement`) from the rendered
 React component (`renderedComponent`) using React's `getDOMNode()` method.
 
 `renderIntoDocument` is where jsdom comes in, allowing us to access the `document`
 object as if we were in a browser!
 
 All together now, and we end up with a complete test that can be run with
-`./node_modules/.bin/mocha --compilers js:babel/register --recursive`
+`./node_modules/.bin/mocha --compilers js:babel-core/register --recursive`
 (alternatively can be run as `npm test` in the example repo):
 
 ```javascript
 // file: test/component/todo-item.js
-var React = require('react/addons'),
-    assert = require('assert'),
-    TodoItem = require('../../common/components/todo-item'),
-    TestUtils = React.addons.TestUtils;
+import assert from 'assert';
+import React from 'react/addons';
+import TodoItem from '../../common/components/todo-item';
 
-describe('Todo-item component', function(){
-  before('render and locate element', function() {
-    var renderedComponent = TestUtils.renderIntoDocument(
+const TestUtils = React.addons.TestUtils;
+
+describe('Todo-item component', () => {
+  let inputElement;
+
+  before('render and locate element', () => {
+    const renderedComponent = TestUtils.renderIntoDocument(
       <TodoItem done={false} name="Write Tutorial"/>
     );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
-    var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
+    const inputComponent = TestUtils.findRenderedDOMComponentWithTag(
       renderedComponent,
       'input'
     );
 
-    this.inputElement = inputComponent.getDOMNode();
+    inputElement = inputComponent.getDOMNode();
   });
 
-  it('<input> should be of type "checkbox"', function() {
-    assert(this.inputElement.getAttribute('type') === 'checkbox');
+  it('<input> should be of type "checkbox"', () => {
+    assert(inputElement.getAttribute('type') === 'checkbox');
   });
 
-  it('<input> should not be checked', function() {
-    assert(this.inputElement.checked === false);
+  it('<input> should not be checked', () => {
+    assert(inputElement.checked === false);
   });
 });
 ```

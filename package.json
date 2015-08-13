@@ -1,20 +1,19 @@
 {
   "name": "react-testing-mocha-jsdom",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Unit testing React with Mocha and jsdom",
   "scripts": {
-    "test": "mocha --compilers js:babel/register --recursive"
+    "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "author": "Jess Telford <hi@jes.st>",
   "license": "ISC",
-  "devDependencies": {
-    "babel": "^5.1.13",
-    "jsdom": "^2.0.0",
-    "mocha": "^2.1.0",
-    "react-tools": "^0.12.1"
-  },
   "dependencies": {
-    "react": "^0.12.1"
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel-core": "^5.4.7",
+    "jsdom": "^6.0.1",
+    "mocha": "^2.2.5"
   }
 }
