@@ -1,29 +1,32 @@
-var React = require('react/addons'),
-    assert = require('assert'),
-    TodoItem = require('../../common/components/todo-item'),
-    TestUtils = React.addons.TestUtils;
+import assert from 'assert';
+import React from 'react/addons';
+import TodoItem from '../../common/components/todo-item';
 
-describe('Todo-item component', function(){
-  before('render and locate element', function() {
-    var renderedComponent = TestUtils.renderIntoDocument(
+const TestUtils = React.addons.TestUtils;
+
+describe('Todo-item component', () => {
+  let inputElement;
+
+  before('render and locate element', () => {
+    const renderedComponent = TestUtils.renderIntoDocument(
       <TodoItem done={false} name="Write Tutorial"/>
     );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
-    var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
+    const inputComponent = TestUtils.findRenderedDOMComponentWithTag(
       renderedComponent,
       'input'
     );
 
-    this.inputElement = inputComponent.getDOMNode();
+    inputElement = inputComponent.getDOMNode();
   });
 
-  it('<input> should be of type "checkbox"', function() {
-    assert(this.inputElement.getAttribute('type') === 'checkbox');
+  it('<input> should be of type "checkbox"', () => {
+    assert(inputElement.getAttribute('type') === 'checkbox');
   });
 
-  it('<input> should not be checked', function() {
-    assert(this.inputElement.checked === false);
+  it('<input> should not be checked', () => {
+    assert(inputElement.checked === false);
   });
 });

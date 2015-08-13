@@ -1,39 +1,38 @@
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-  displayName: 'TodoItem',
+export default class TodoItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { done: props.done };
+  }
 
   /**
    * Lifecycle functions
    **/
-  getInitialState: function() {
-    return { done: this.props.done }
-  },
-
-  componentDidMount: function() {
+  componentDidMount() {
     this.setDone(this.refs.done.getDOMNode().checked);
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <label>
         <input ref="done" type="checkbox" defaultChecked={this.state.done} onChange={this.onChange} />
         {this.props.name}
       </label>
     );
-  },
+  }
 
   /**
    * Event handlers
    **/
-  onChange: function(event) {
+  onChange(event) {
     this.setDone(event.target.checked);
-  },
+  }
 
   /**
    * Utilities
    **/
-  setDone: function(done) {
+  setDone(done) {
     this.setState({ done: !!done});
   }
-});
+}
