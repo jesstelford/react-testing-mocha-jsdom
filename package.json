@@ -12,9 +12,10 @@
     "babel": "^5.1.13",
     "jsdom": "^2.0.0",
     "mocha": "^2.1.0",
-    "react-tools": "^0.12.1"
+    "react-addons-test-utils": "^0.14.2"
   },
   "dependencies": {
-    "react": "^0.12.1"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
   }
 }

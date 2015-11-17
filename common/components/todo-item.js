@@ -11,7 +11,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    this.setDone(this.refs.done.getDOMNode().checked);
+    this.setDone(this.refs.done.checked);
   },
 
   render: function() {
