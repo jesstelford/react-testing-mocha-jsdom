@@ -1,29 +1,41 @@
-var React = require('react/addons'),
-    assert = require('assert'),
+var assert = require('assert'),
     TodoItem = require('../../common/components/todo-item'),
-    TestUtils = React.addons.TestUtils;
+    React = require('react'),
+    ReactDOM = require('react-dom'),
+    ReactTestUtils = require('react-addons-test-utils');
 
-describe('Todo-item component', function(){
+describe('Todo-item component', function() {
   before('render and locate element', function() {
-    var renderedComponent = TestUtils.renderIntoDocument(
+    var renderedComponent = ReactTestUtils.renderIntoDocument(
       <TodoItem done={false} name="Write Tutorial"/>
     );
 
     // Searching for <input> tag within rendered React component
     // Throws an exception if not found
-    var inputComponent = TestUtils.findRenderedDOMComponentWithTag(
+    var inputComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       renderedComponent,
       'input'
     );
 
-    this.inputElement = inputComponent.getDOMNode();
+    this.inputElement = inputComponent;
   });
 
   it('<input> should be of type "checkbox"', function() {
-    assert(this.inputElement.getAttribute('type') === 'checkbox');
+    assert.equal(this.inputElement.getAttribute('type'), 'checkbox');
   });
 
   it('<input> should not be checked', function() {
-    assert(this.inputElement.checked === false);
+    assert.equal(this.inputElement.checked, false);
   });
+
+  it('<input> should change state when clicked', function() {
+
+    var renderedComponent = ReactTestUtils.renderIntoDocument(
+      <TodoItem done={false} name="Write Tutorial"/>
+    );
+
+    assert.equal(renderedComponent.state.done, false);
+    ReactTestUtils.Simulate.change(renderedComponent.refs.done, {"target": {"checked": true}})
+    assert.equal(renderedComponent.state.done, true)
+  })
 });
