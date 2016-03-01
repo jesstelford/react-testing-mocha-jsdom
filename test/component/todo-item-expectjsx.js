@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import assert from 'assert';
 import expectJSX from 'expect-jsx';
 import expect from 'expect';
 import TodoItem from '../../common/components/todo-item';
