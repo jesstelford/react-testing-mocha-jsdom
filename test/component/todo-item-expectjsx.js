@@ -4,7 +4,7 @@ import expectJSX from 'expect-jsx';
 import expect from 'expect';
 import TodoItem from '../../common/components/todo-item';
 
-import {createRenderer, renderIntoDocument, findRenderedDOMComponentWithTag} from 'react-addons-test-utils';
+import {createRenderer} from 'react-addons-test-utils';
 
 expect.extend(expectJSX);
 
