@@ -80,7 +80,7 @@ module.exports = React.createClass({
 
 ### jsdom
 
-Setting up jsdom ^2.0.0 can be acheived in a couple of lines:
+Setting up jsdom ^2.0.0 can be achieved in a couple of lines:
 
 ```javascript
 // file: test/setup.js
